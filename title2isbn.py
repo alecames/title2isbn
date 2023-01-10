@@ -41,6 +41,6 @@ def print_result(title):
     isbn, title = get_isbn(title)
     print(f"{isbn}\t{title}")
 
-print("------ Results ------\nISBN\t\tTitle\n------------------------------------")
+print("------ Results ------\nISBN\t\tTitle\n----            -----")
 if len(sys.argv) > 1: read_from_args()
 else: read_from_file()

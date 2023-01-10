@@ -1,7 +1,9 @@
 import requests
+import sys
 
 # this script grabs the ISBN-13 of a book from the Google Books API
 # drop a line separated list of book titles in books.txt and run the script
+# alternatively, pass the titles as arguments to the script, encase in quotes and separate with a space
 
 def get_isbn(title):
     r = requests.get("https://www.googleapis.com/books/v1/volumes?q=" + title)
@@ -14,14 +16,27 @@ def get_isbn(title):
                 title = book["volumeInfo"]["title"]  # get the title from the database
                 return isbn, title
         isbn = industry_identifiers[0]["identifier"]
+
         title = book["volumeInfo"]["title"]  # get the title from the database
         return isbn, title
     else: return "N/A", "N/A"
 
-with open("titles.txt", "r") as f:
-    lines = f.readlines()
+def read_from_file():
+    with open("titles.txt", "r") as f:
+        titles = f.readlines()
+    for line in titles:
+        entered_title = line.strip()
+        print_result(entered_title)
 
-for line in lines:
-    entered_title = line.strip()
-    isbn, title = get_isbn(entered_title)
-    print(f"{isbn}\t\t{title}")
+def read_from_args():
+    titles = sys.argv[1:]
+    for title in titles:
+        print_result(title)
+
+def print_result(title):
+    isbn, title = get_isbn(title)
+    print(f"{isbn}\t{title}")
+
+print("Results\nISBN\t\tTitle\n------------------------------------")
+if len(sys.argv) > 1: read_from_args()
+else: read_from_file()

@@ -33,4 +33,4 @@ Output:
 9780743273565           The Great Gatsby
 ```
 ### Note
-The selected book might not always be an exact match
+The selected book might not always be an exact match, but is usually the first result.
